@@ -194,7 +194,7 @@ strong {
   font-size: 0.8rem;
 }
 
-/* Hero — Vercel / Linear + hero photo background */
+/* Hero — Vercel / Linear + original photo background (tushar 1.jpg) */
 #hero.section--hero {
   position: relative;
   isolation: isolate;
@@ -208,10 +208,11 @@ strong {
   left: 50%;
   width: 100vw;
   margin-left: -50vw;
-  background-image: url("hero-background.png");
-  background-size: cover;
-  background-position: top center;
+  background-image: url("tushar 1.jpg");
+  background-size: auto 100%;
+  background-position: right center;
   background-repeat: no-repeat;
+  background-color: #050505;
   z-index: 0;
 }
 
@@ -225,10 +226,9 @@ strong {
   margin-left: -50vw;
   background: linear-gradient(
     105deg,
-    rgba(10, 10, 10, 0.92) 0%,
-    rgba(10, 10, 10, 0.82) 38%,
-    rgba(10, 10, 10, 0.45) 72%,
-    rgba(10, 10, 10, 0.35) 100%
+    rgba(10, 10, 10, 0.72) 0%,
+    rgba(10, 10, 10, 0.58) 42%,
+    rgba(10, 10, 10, 0.3) 100%
   );
   z-index: 1;
 }
