@@ -35,6 +35,7 @@ body {
   line-height: 1.6;
   font-size: 15px;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 a {
@@ -193,7 +194,74 @@ strong {
   font-size: 0.8rem;
 }
 
-/* Hero — Vercel / Linear */
+/* Hero — Vercel / Linear + original photo background (tushar 1.jpg) */
+#hero.section--hero {
+  position: relative;
+  isolation: isolate;
+}
+
+#hero.section--hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  background-image: url("tushar 1.jpg");
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+#hero.section--hero::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  background: linear-gradient(
+    105deg,
+    rgba(10, 10, 10, 0.88) 0%,
+    rgba(10, 10, 10, 0.78) 42%,
+    rgba(10, 10, 10, 0.5) 100%
+  );
+  z-index: 1;
+}
+
+#hero.section--hero .hero-inner,
+#hero.section--hero .hero-aside {
+  position: relative;
+  z-index: 2;
+}
+
+#hero.section--hero .mono-label {
+  color: rgba(212, 212, 216, 0.95);
+}
+
+#hero.section--hero .hero-lead {
+  color: rgba(228, 228, 231, 0.9);
+}
+
+#hero.section--hero .hero-lead strong {
+  color: #fafafa;
+}
+
+#hero.section--hero .btn-ghost {
+  color: #e4e4e7;
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.28);
+}
+
+#hero.section--hero .btn-ghost:hover {
+  color: #fafafa;
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(24, 24, 27, 0.55);
+}
+
 .section--hero {
   display: grid;
   gap: 2rem;
@@ -276,7 +344,13 @@ strong {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 1.1rem 1.15rem;
-  background: rgba(24, 24, 27, 0.45);
+  background: rgba(24, 24, 27, 0.55);
+  backdrop-filter: blur(8px);
+}
+
+#hero.section--hero .hero-aside .panel {
+  background: rgba(10, 10, 10, 0.5);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 .panel-list {
