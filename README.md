@@ -17,6 +17,11 @@ Open `index.html` in a browser or serve the folder with any static server.
 
 Push to the `main` branch of the GitHub Pages repository; the site serves `index.html` from the repo root.
 
+## License and usage
+
+- Code in this repository is licensed under the MIT License (`LICENSE`).
+- Personal media assets (photos) and personal branding content are not included in the MIT grant; please request permission before reuse.
+
 ## Next steps (optional)
 
 - Migrate to Next.js + Tailwind on Vercel for componentized architecture while keeping GitHub Pages export compatibility via static output.
