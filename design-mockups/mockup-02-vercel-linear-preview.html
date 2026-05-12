@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mockup B — Vercel / Linear Dark</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      background: #0a0a0a;
+      color: #fafafa;
+      min-height: 100vh;
+      padding: 2rem clamp(1rem, 4vw, 3rem);
+    }
+    nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4rem; font-size: 0.875rem; color: #888; }
+    nav a { color: #a1a1aa; text-decoration: none; margin-left: 1.5rem; }
+    .hero { max-width: 720px; }
+    .eyebrow { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: #71717a; margin-bottom: 1rem; }
+    h1 { font-size: clamp(2.25rem, 5vw, 3.5rem); font-weight: 600; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 1rem; }
+    .gradient-line { height: 2px; width: 120px; background: linear-gradient(90deg, #00e5ff, #7b61ff); margin-bottom: 1.25rem; border-radius: 2px; }
+    p { color: #a1a1aa; font-size: 1.05rem; line-height: 1.65; max-width: 52ch; margin-bottom: 2rem; }
+    .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 3rem; }
+    .card {
+      border: 1px solid #27272a;
+      border-radius: 8px;
+      padding: 1.25rem;
+      background: rgba(24, 24, 27, 0.6);
+    }
+    .card h3 { font-size: 0.8rem; font-weight: 500; color: #e4e4e7; margin-bottom: 0.5rem; }
+    .card span { font-size: 0.7rem; color: #52525b; font-family: ui-monospace, monospace; }
+  </style>
+</head>
+<body>
+  <nav>
+    <strong style="color:#fafafa;">VidyaLok</strong>
+    <div><a href="#">Work</a><a href="#">Research</a><a href="#">GitHub</a><a href="#">Contact</a></div>
+  </nav>
+  <div class="hero">
+    <p class="eyebrow">Founder portfolio</p>
+    <div class="gradient-line"></div>
+    <h1>Immersive education systems, built like infrastructure.</h1>
+    <p>AI, holography, and interactive learning — one product surface, research depth, startup velocity.</p>
+  </div>
+  <div class="row">
+    <div class="card"><h3>GitHub intelligence</h3><span>API · cache · filters</span></div>
+    <div class="card"><h3>VidyaLok</h3><span>Flagship · vision</span></div>
+    <div class="card"><h3>Research</h3><span>Papers · diagrams</span></div>
+  </div>
+  <p style="margin-top:3rem;font-size:0.75rem;color:#52525b;">Mockup B — open in browser, zoom 100%, screenshot if needed.</p>
+</body>
+</html>
