@@ -51,8 +51,7 @@ const renderSkeletons = () => {
 const safeFetchJson = async (url) => {
   const response = await fetch(url, { headers: { Accept: 'application/vnd.github+json' } });
   if (!response.ok) {
-    const message = `GitHub API error ${response.status}`;
-    throw new Error(message);
+    throw new Error(`GitHub API error ${response.status}`);
   }
   return response.json();
 };
@@ -70,7 +69,7 @@ const buildLanguageOptions = (repos) => {
     if (repo.language) langs.add(repo.language);
   });
   const sorted = Array.from(langs).sort((a, b) => a.localeCompare(b));
-  languageSelect.innerHTML = '<option value="all">All Languages</option>';
+  languageSelect.innerHTML = '<option value="all">All languages</option>';
   sorted.forEach((lang) => {
     const opt = document.createElement('option');
     opt.value = lang;
@@ -97,12 +96,12 @@ const renderStats = (repos, events) => {
   const streakApprox = pushDays.size;
 
   statsContainer.innerHTML = `
-    <article class="github-stat"><h3>Public Repositories</h3><p>${repos.length}</p></article>
-    <article class="github-stat"><h3>Total Stars</h3><p>${totalStars}</p></article>
-    <article class="github-stat"><h3>Total Forks</h3><p>${totalForks}</p></article>
-    <article class="github-stat"><h3>Languages Detected</h3><p>${languages}</p></article>
+    <article class="github-stat"><h3>Public repositories</h3><p>${repos.length}</p></article>
+    <article class="github-stat"><h3>Total stars</h3><p>${totalStars}</p></article>
+    <article class="github-stat"><h3>Total forks</h3><p>${totalForks}</p></article>
+    <article class="github-stat"><h3>Languages detected</h3><p>${languages}</p></article>
     <article class="github-stat"><h3>Active (14d)</h3><p>${recentPushes}</p></article>
-    <article class="github-stat"><h3>Push Days (tracked)</h3><p>${streakApprox}</p></article>
+    <article class="github-stat"><h3>Push days (tracked)</h3><p>${streakApprox}</p></article>
   `;
 
   if (activityContainer) {
@@ -112,14 +111,14 @@ const renderStats = (repos, events) => {
       .map((evt) => {
         const repoName = evt.repo?.name || 'repository';
         const action = evt.type.replace('Event', '');
-        return `<article class="activity-card"><h3>${action}</h3><p>${repoName} • ${formatDate(evt.created_at)}</p></article>`;
+        return `<article class="activity-card"><h3>${action}</h3><p>${repoName} · ${formatDate(evt.created_at)}</p></article>`;
       })
       .join('');
 
     activityContainer.innerHTML = `
       <article class="activity-card">
-        <h3>Contribution Heatmap</h3>
-        <p>Derived from repository push activity (GitHub Pages safe).</p>
+        <h3>Contribution heatmap</h3>
+        <p class="muted small">Derived from repository push dates (GitHub Pages–friendly).</p>
         <div class="heatmap">${heatmap}</div>
       </article>
       ${activityItems}
@@ -128,9 +127,7 @@ const renderStats = (repos, events) => {
 };
 
 const buildHeatmap = (repos) => {
-  const weeks = 12;
-  const days = 7;
-  const buckets = Array.from({ length: weeks * days }, () => 0);
+  const buckets = Array.from({ length: 12 * 7 }, () => 0);
   repos.forEach((repo) => {
     if (!repo.pushed_at) return;
     const pushed = new Date(repo.pushed_at).getTime();
@@ -144,7 +141,7 @@ const buildHeatmap = (repos) => {
   return buckets
     .map((count) => {
       const intensity = Math.min(1, count / max);
-      const alpha = 0.15 + intensity * 0.85;
+      const alpha = 0.12 + intensity * 0.75;
       return `<span style="background:rgba(0,229,255,${alpha.toFixed(2)})"></span>`;
     })
     .join('');
@@ -162,14 +159,14 @@ const renderRepos = (repos) => {
     const card = document.createElement('article');
     card.className = 'github-card';
     card.innerHTML = `
-      <p style="color:#00e5ff;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;">Pinned Spotlight</p>
+      <p class="pinned-badge">Pinned spotlight</p>
       <h3>${repo.name}</h3>
       <p>${repo.description || 'No description available'}</p>
       <div class="github-meta">
-        <span>⭐ ${repo.stargazers_count || 0}</span>
-        <span>🍴 ${repo.forks_count || 0}</span>
-        <span>${repo.language || 'Language n/a'}</span>
-        <span>Updated ${formatDate(repo.updated_at)}</span>
+        <span>${repo.stargazers_count || 0} stars</span>
+        <span>${repo.forks_count || 0} forks</span>
+        <span>${repo.language || 'n/a'}</span>
+        <span>${formatDate(repo.updated_at)}</span>
       </div>
       <a class="repo-link" href="${repo.html_url}" target="_blank" rel="noreferrer">Open repository →</a>
     `;
@@ -185,10 +182,10 @@ const renderRepos = (repos) => {
       <h3>${repo.name}</h3>
       <p>${repo.description || 'No description available'}</p>
       <div class="github-meta">
-        <span>⭐ ${repo.stargazers_count || 0}</span>
-        <span>🍴 ${repo.forks_count || 0}</span>
-        <span>${repo.language || 'Language n/a'}</span>
-        <span>Updated ${formatDate(repo.updated_at)}</span>
+        <span>${repo.stargazers_count || 0} stars</span>
+        <span>${repo.forks_count || 0} forks</span>
+        <span>${repo.language || 'n/a'}</span>
+        <span>${formatDate(repo.updated_at)}</span>
       </div>
       <a class="repo-link" href="${repo.html_url}" target="_blank" rel="noreferrer">View on GitHub →</a>
     `;
@@ -233,7 +230,7 @@ const loadGithubData = async () => {
     console.error('GitHub fetch failed:', err);
     if (errorBox) {
       errorBox.textContent =
-        'GitHub data could not be refreshed. Showing cached results if available, otherwise please retry shortly.';
+        'GitHub data could not be refreshed. Cached results may be shown; try again shortly.';
     }
     if (!cached && repoList) {
       repoList.innerHTML = '<p class="error-message">Unable to load repositories right now.</p>';
@@ -241,17 +238,21 @@ const loadGithubData = async () => {
   }
 };
 
-// Navigation + interactions
 const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav-list');
 if (menuToggle && nav) {
-  menuToggle.addEventListener('click', () => nav.classList.toggle('open'));
+  menuToggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
   nav.querySelectorAll('a').forEach((link) =>
-    link.addEventListener('click', () => nav.classList.remove('open'))
+    link.addEventListener('click', () => {
+      nav.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    })
   );
 }
 
-// Scroll reveal
 const revealEls = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver(
   (entries) => {
@@ -259,57 +260,9 @@ const io = new IntersectionObserver(
       if (entry.isIntersecting) entry.target.classList.add('active');
     });
   },
-  { threshold: 0.2 }
+  { threshold: 0.12, rootMargin: '0px 0px -5% 0px' }
 );
 revealEls.forEach((el) => io.observe(el));
-
-// Custom cursor + parallax orbs
-const dot = document.getElementById('cursor-dot');
-const ring = document.getElementById('cursor-ring');
-const orbs = document.querySelectorAll('.bg-orb');
-let mouseX = 0;
-let mouseY = 0;
-let ringX = 0;
-let ringY = 0;
-
-window.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  if (dot) {
-    dot.style.left = `${mouseX}px`;
-    dot.style.top = `${mouseY}px`;
-  }
-  orbs.forEach((orb, idx) => {
-    const depth = idx + 1;
-    const x = (window.innerWidth / 2 - mouseX) / (40 / depth);
-    const y = (window.innerHeight / 2 - mouseY) / (40 / depth);
-    orb.style.transform = `translate(${x}px, ${y}px)`;
-  });
-});
-
-const animateRing = () => {
-  ringX += (mouseX - ringX) * 0.18;
-  ringY += (mouseY - ringY) * 0.18;
-  if (ring) {
-    ring.style.left = `${ringX}px`;
-    ring.style.top = `${ringY}px`;
-  }
-  requestAnimationFrame(animateRing);
-};
-animateRing();
-
-// Magnetic buttons
-document.querySelectorAll('.magnetic').forEach((btn) => {
-  btn.addEventListener('mousemove', (e) => {
-    const rect = btn.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
-  });
-  btn.addEventListener('mouseleave', () => {
-    btn.style.transform = 'translate(0, 0)';
-  });
-});
 
 if (searchInput) searchInput.addEventListener('input', applyFilters);
 if (languageSelect) languageSelect.addEventListener('change', applyFilters);
